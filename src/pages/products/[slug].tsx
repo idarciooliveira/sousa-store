@@ -50,14 +50,14 @@ export default function ProductDetail({ product }: Props) {
                                 <div className="relative mb-6 lg:mb-10 lg:h-96">
                                     <a className="absolute left-0 transform lg:ml-2 top-1/2 translate-1/2" href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-green-500 bi bi-chevron-left dark:text-green-200" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
+                                            <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
                                             </path>
                                         </svg>
                                     </a>
                                     <img className="object-contain w-full lg:h-full" src={product.imageUrl} alt="" />
                                     <a className="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2" href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-green-500 bi bi-chevron-right dark:text-green-200" viewBox="0 0 16 16">
-                                            <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
+                                            <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
                                             </path>
                                         </svg>
                                     </a>
