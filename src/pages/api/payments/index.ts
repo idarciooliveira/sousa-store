@@ -1,15 +1,22 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
 
 const BASE_URL = process.env.BASE_URL;
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET
 
+type RequestProps = NextApiRequest & {
+  amount: number
+  currency: string
+}
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse<any>) {
+export default async function handler(req: RequestProps, res: NextApiResponse<any>) {
 
   try {
+
+    const { amount, currency } = req.body
+
     const accessToken = await generateAccessToken();
+
     const url = `${BASE_URL}/v2/checkout/orders`;
 
     const payload = {
@@ -17,8 +24,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse<
       purchase_units: [
         {
           amount: {
-            currency_code: "USD",
-            value: "100.00",
+            currency_code: currency,
+            value: amount,
           },
         },
       ],

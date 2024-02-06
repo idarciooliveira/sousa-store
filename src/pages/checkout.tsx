@@ -59,7 +59,7 @@ export default function Checkout() {
           }}
           createOrder={async () => {
             try {
-              const response = await fetch("/api/orders", {
+              const response = await fetch("/api/payments", {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -96,7 +96,7 @@ export default function Checkout() {
           onApprove={async (data, actions) => {
             try {
               const response = await fetch(
-                `/api/orders/${data.orderID}/capture`,
+                `/api/payments/${data.orderID}/capture`,
                 {
                   method: "POST",
                   headers: {

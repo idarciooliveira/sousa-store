@@ -3,7 +3,12 @@ import { generateAccessToken } from "..";
 
 const BASE_URL = process.env.BASE_URL;
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+type RequestProps = NextApiRequest & {
+    amount: number
+    currency: string
+}
+
+export default async function handler(req: RequestProps, res: NextApiResponse) {
     const { query: { orderID }, method } = req
 
     if (method === 'POST') {
