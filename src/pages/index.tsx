@@ -6,7 +6,17 @@ export default function App() {
     return (
         <div>
             <Header />
-            <Products />
+            <Products products={[
+                {
+                    category: {
+                        description: 'tecnologia'
+                    },
+                    description: 'ada',
+                    id: 'id',
+                    imageUrl: '',
+                    price: 100
+                }
+            ]} />
             <Footer />
         </div>
     )

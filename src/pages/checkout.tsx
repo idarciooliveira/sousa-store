@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
+import Link from "next/link";
 
 // Renders errors or successfull transactions on the screen.
 function Message({ content }: any) {
@@ -15,11 +18,39 @@ const initialOptions = {
 
 export default function Checkout() {
 
-
   const [message, setMessage] = useState("");
 
   return (
-    <div className="App">
+    <div>
+      <Header />
+      <div className="flex flex-col container rounded-md mx-auto mb-2 max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-100 text-gray-800">
+        <h2 className="text-xl font-semibold">
+          Checkout da Compra
+        </h2>
+        <div className="flex flex-col w-full space-y-2 sm:space-y-4">
+          <div className="flex justify-between w-full items-center">
+            <h3 className="text-md font-semibold leadi">  Total da Compra </h3>
+            <p className="text-right text-md"> 599.999 AO </p>
+          </div>
+          <div className="flex justify-between w-full items-center">
+            <h3 className="text-md font-semibold leadi"> Local de Entrega </h3>
+            <select className="w-60 text-center h-10 text-md rounded ">
+              <option value="LUBANGO">LUBANGO</option>
+              <option value="MUTUNDO">MUTUNDO</option>
+            </select>
+          </div>
+        </div>
+
+        <div className="space-y-1 text-right">
+          <p>Taxa de Entrega: <span className="font-semibold"> 599 AO</span> </p>
+          <p>Total a Pagar: <span className="font-semibold"> 699.999 AO</span> </p>
+        </div>
+        <div className="flex justify-end space-x-4">
+          <Link href='/checkout' className="px-6 py-2 border rounded-md bg-green-600 text-gray-50 border-green-600">
+            Finalizar pedido
+          </Link>
+        </div>
+      </div>
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
           style={{
@@ -105,6 +136,7 @@ export default function Checkout() {
         />
       </PayPalScriptProvider>
       <Message content={message} />
+      <Footer />
     </div>
   );
 }
