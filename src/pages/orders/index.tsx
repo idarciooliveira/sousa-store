@@ -8,7 +8,7 @@ export default function Orders() {
         <div>
             <Header />
             <div className="container p-2 mx-auto sm:p-4 text-gray-800">
-                <h2 className="mb-4 text-2xl font-semibold leadi">Meus pedidos</h2>
+                <h2 className="mb-4 text-2xl font-semibold leadi">Meus Pedidos</h2>
                 <div className="overflow-x-auto">
                     <table className="min-w-full text-xs">
                         <thead className="bg-gray-300">

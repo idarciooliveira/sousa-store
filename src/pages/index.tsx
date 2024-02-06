@@ -1,23 +1,31 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Products from "@/components/products";
+import { ProductProps, getProducts } from "@/services/product";
+import { GetServerSideProps } from "next";
 
-export default function App() {
+type Props = {
+    products: ProductProps[]
+}
+
+export default function App({ products }: Props) {
+
     return (
-        <div>
+        <>
             <Header />
-            <Products products={[
-                {
-                    category: {
-                        description: 'tecnologia'
-                    },
-                    description: 'ada',
-                    id: 'id',
-                    imageUrl: '',
-                    price: 100
-                }
-            ]} />
+            <Products products={products} />
             <Footer />
-        </div>
+        </>
     )
+}
+
+export const getServerSideProps: GetServerSideProps = async () => {
+
+    const products = await getProducts()
+
+    return {
+        props: {
+            products
+        }
+    }
 }

@@ -1,7 +1,10 @@
+import { useCart } from '@/pages/context/cart'
 import Link from 'next/link'
 import { FaSignOutAlt, FaShoppingBag } from 'react-icons/fa'
 
 export default function Header() {
+
+    const { cart } = useCart()
 
     function handleSignOut() {
 
@@ -29,7 +32,7 @@ export default function Header() {
                             <span className='flex flex-row items-center justify-center'>
                                 <FaShoppingBag size={18} className='ml-2 mr-1 text-green-600' />
                                 <p className='text-sm text-green-600 font-bold'>
-                                    12
+                                    {cart?.length}
                                 </p>
                             </span>
                         </Link>
