@@ -23,7 +23,7 @@ export function useCart() {
     return useContext(CartContext);
 }
 
-export function CartProvider({ children }: any) {
+export default function CartProvider({ children }: any) {
 
     const [cart, setCart] = useState<CartProps[]>([]);
 
