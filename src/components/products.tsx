@@ -16,7 +16,7 @@ export default function Products({ products }: Props) {
                     <p className="font-serif text-sm text-gray-600">Explore o Maior Catálogo de Produtos da Região Sul.</p>
                 </div>
                 <div className="grid grid-cols-1 gap-x-4 gap-y-8 md:grid-cols-2 lg:grid-cols-4">
-                    {products && products.map(product => (
+                    {products.length > 0 && products.map(product => (
                         <Link key={product.id} href={`/products/${product.id}`} className="flex flex-col bg-gray-50">
                             <div aria-label="image">
                                 <img className="object-cover w-full h-52 bg-gray-500" src={product.imageUrl} />

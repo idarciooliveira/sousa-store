@@ -1,7 +1,28 @@
 
-const base = 'http://localhost:3000'
+const base = process.env.NEXT_PUBLIC_API
 const productUrl = `${base}/api/v1/products`
 const orderUrl = `${base}/api/v1/orders`
+const userUrl = `${base}/api/v1/auth/users`
+
+
+export type UserProps = {
+    name: string
+    phoneNumber: string
+    email: string
+    password: string
+}
+
+export async function createUser(props: UserProps): Promise<UserProps[]> {
+    const response = await fetch(`${userUrl}`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(props)
+    })
+    const data = await response.json()
+    return data
+}
 
 export type ProductProps = {
     id: string

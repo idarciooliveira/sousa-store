@@ -14,8 +14,8 @@ export default function Cart() {
             <div className="flex flex-col container mx-auto max-w-3xl mb-2 rounded-md p-6 space-y-4 sm:p-10 bg-gray-100 text-gray-800">
                 <h2 className="text-xl font-semibold">Carrinho de Compras</h2>
                 <ul className="flex flex-col divide-y divide-gray-300">
-                    <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
-                        {cart.length > 0 && cart.map(cartItem => (
+                    {cart.length > 0 && cart.map(cartItem => (
+                        <li className="flex flex-col py-6 sm:flex-row sm:justify-between">
                             <div className="flex w-full space-x-2 sm:space-x-4" key={cartItem.id}>
                                 <img className="flex-shrink-0 object-cover w-20 h-20 border-transparent rounded outline-none sm:w-32 sm:h-32 bg-gray-500" src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?ixlib=rb-1.2.1&amp;ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&amp;auto=format&amp;fit=crop&amp;w=1350&amp;q=80" alt="Polaroid camera" />
                                 <div className="flex flex-col justify-between w-full pb-4">
@@ -44,8 +44,8 @@ export default function Cart() {
                                     </div>
                                 </div>
                             </div>
-                        ))}
-                    </li>
+                        </li>
+                    ))}
                 </ul>
                 <div className="space-y-1 text-right">
                     <p>Total a Pagar: {'  '}

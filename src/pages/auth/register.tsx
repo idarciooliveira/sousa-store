@@ -1,29 +1,23 @@
-import { signIn } from 'next-auth/react'
+import { UserProps, createUser } from '@/services/api'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useForm } from 'react-hook-form'
 import toast from 'react-hot-toast'
 
-type Input = {
-    email: string
-    password: string
-}
 export default function Signin() {
 
-    const { register, reset, handleSubmit } = useForm<Input>()
+    const router = useRouter()
+    const { register, reset, handleSubmit } = useForm<UserProps>()
 
-    async function handleOnSubmit({ email, password }: Input) {
-        const response = await signIn('credentials', {
-            username: email,
-            password,
-            redirect: true,
-            callbackUrl: '/'
-        })
+    async function handleOnSubmit(values: UserProps) {
+        const user = await createUser(values)
 
-        if (response?.ok) {
-            return toast.error('Email ou Senha incorrecta', { position: 'top-right' })
+        if (!user) {
+            return toast.error('Ocorreu um erro', { position: 'top-right' })
         } else {
             reset()
-            return toast.success('Bem-vindo', { position: 'top-right' })
+            toast.success('Registrado', { position: 'top-right' })
+            router.push('/auth/signin')
         }
 
 
@@ -38,6 +32,14 @@ export default function Signin() {
                 <form onSubmit={handleSubmit(handleOnSubmit)} className="space-y-12">
                     <div className="space-y-4">
                         <div>
+                            <label htmlFor="name" className="block mb-2 text-sm">Nome</label>
+                            <input required {...register('name')} type="name" name="name" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+                        </div>
+                        <div>
+                            <label htmlFor="phoneNumber" className="block mb-2 text-sm">Telefone</label>
+                            <input required {...register('phoneNumber')} type="number" name="phoneNumber" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
+                        </div>
+                        <div>
                             <label htmlFor="email" className="block mb-2 text-sm">Email</label>
                             <input required {...register('email')} type="email" name="email" className="w-full px-3 py-2 border rounded-md border-gray-300 bg-gray-50 text-gray-800" />
                         </div>
@@ -51,12 +53,12 @@ export default function Signin() {
                     <div className="space-x-2 flex flex-row items-center justify-center">
                         <div>
                             <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-green-600 text-gray-50">
-                                Entrar
+                                Criar Conta
                             </button>
                         </div>
                         <div>
-                            <Link href={'/auth/register'} className="w-full px-8 py-3 font-semibold bg-blue-600 rounded-md bg-green-600 text-gray-50">
-                                Criar uma conta
+                            <Link href={'/auth/signin'} className="w-full px-8 py-3 font-semibold bg-blue-600 rounded-md bg-green-600 text-gray-50">
+                                Ja tenho uma conta
                             </Link>
                         </div>
                     </div>
