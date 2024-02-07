@@ -7,6 +7,7 @@ import { getSession } from "next-auth/react";
 import { GetServerSideProps } from "next";
 import { useCart } from "./context/cart";
 import { useRouter } from "next/navigation";
+import { Router } from "next/router";
 
 const initialOptions = {
   "clientId": "AWP0R2oes7y3Z6BJkuQICfF1BcL61y4DTuaZJrEZ4iZEC5rPiam67PFjVBtokXCh38Vnzd6vDTlC2ohi",
@@ -22,10 +23,7 @@ export default function Checkout() {
   const { cart } = useCart()
   const total = cart.reduce((prev, next) => prev + (next.price * next.qts), 0)
 
-  if (cart.length <= 0) {
-    router.replace('/')
-  }
-
+  if (cart.length <= 0) return <></>
   return (
     <div>
       <Header />
@@ -117,7 +115,7 @@ export default function Checkout() {
                     const transaction =
                       orderData.purchase_units[0].payments.captures[0];
                     toast.success(`Pagamento Concluido, Referência ${transaction.status}: ${transaction.id}`);
-
+                    router.push('/orders')
                   }
                 } catch (error) {
                   toast.error(

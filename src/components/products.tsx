@@ -1,5 +1,5 @@
 
-import { ProductProps } from '@/services/product'
+import { ProductProps } from '@/services/api'
 import Link from 'next/link'
 
 type Props = {

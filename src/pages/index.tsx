@@ -1,7 +1,7 @@
 import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Products from "@/components/products";
-import { ProductProps, getProducts } from "@/services/product";
+import { ProductProps, getProducts } from "@/services/api";
 import { useEffect, useState } from "react";
 
 export default function App() {

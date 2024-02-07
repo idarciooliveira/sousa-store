@@ -2,7 +2,7 @@
 
 import Footer from '@/components/footer'
 import Header from '@/components/header'
-import { ProductProps, getProductId } from '@/services/product'
+import { ProductProps, getProductId } from '@/services/api'
 import { GetServerSideProps } from 'next'
 import React, { useEffect, useState } from 'react'
 import { useCart } from '../context/cart'
