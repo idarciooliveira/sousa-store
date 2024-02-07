@@ -16,9 +16,8 @@ export default function Orders({ orderId }: any) {
             const order = await getOrderId(orderId)
             setOrder(order)
         })()
-    }, [])
+    }, [orderId])
 
-    console.log(order)
     return (
         <div>
             <Header />

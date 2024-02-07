@@ -27,7 +27,7 @@ export default function ProductDetail({ productId }: Props) {
                 setProduct(product)
             }
         })()
-    }, [])
+    }, [productId])
 
 
     function handleOnLowerUnits() {
