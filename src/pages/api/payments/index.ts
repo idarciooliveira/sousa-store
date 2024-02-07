@@ -1,19 +1,42 @@
+import prisma from "@/lib/prisma";
 import type { NextApiRequest, NextApiResponse } from "next";
+import { getToken } from "next-auth/jwt";
 
 const BASE_URL = process.env.BASE_URL;
 const PAYPAL_CLIENT_ID = process.env.PAYPAL_CLIENT_ID;
 const PAYPAL_CLIENT_SECRET = process.env.PAYPAL_CLIENT_SECRET
 
-type RequestProps = NextApiRequest & {
-  amount: number
-  currency: string
+interface RequestProps extends NextApiRequest {
+  body: {
+    currency: string
+    items: {
+      productId: string
+      qts: number
+      price: number
+      total: number
+    }[]
+  }
 }
 
 export default async function handler(req: RequestProps, res: NextApiResponse<any>) {
 
   try {
 
-    const { amount, currency } = req.body
+    const token = await getToken({ req })
+
+    const { items, currency } = req.body
+
+    const user = await prisma.user.findFirst({
+      where: {
+        //@ts-ignore
+        id: token.id
+      }
+    })
+
+
+    if (!user) return res.status(401).json({ message: 'NOT ALLOWED' })
+
+    const amount = items.reduce((prev, next) => prev + next.total, 0)
 
     const accessToken = await generateAccessToken();
 
@@ -40,10 +63,33 @@ export default async function handler(req: RequestProps, res: NextApiResponse<an
       body: JSON.stringify(payload),
     });
 
-    const data = await response.json()
-    res.status(200).json(data);
+    const paypalOrder = await response.json()
+
+    const serializedOrder = items.map(item => {
+      return {
+        productId: item.productId,
+        qts: item.qts,
+      }
+    })
+
+    await prisma.order.create({
+      data: {
+        id: paypalOrder.id,
+        total: amount,
+        status: 'Pendente',
+        userId: user.id,
+        OrderItem: {
+          createMany: {
+            data: serializedOrder
+          }
+        }
+      }
+    })
+
+    res.status(200).json(paypalOrder);
 
   } catch (error) {
+    console.log(error)
     res.status(400).json({ message: 'Erro no pagamento!' })
   }
 

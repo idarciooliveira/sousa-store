@@ -1,13 +1,18 @@
 import { useCart } from '@/pages/context/cart'
+import { signOut, useSession } from 'next-auth/react'
 import Link from 'next/link'
 import { FaSignOutAlt, FaShoppingBag } from 'react-icons/fa'
 
 export default function Header() {
 
+    const { data: session } = useSession()
     const { cart } = useCart()
 
     function handleSignOut() {
-
+        signOut({
+            callbackUrl: '/',
+            redirect: true
+        })
     }
 
     return (
@@ -21,11 +26,15 @@ export default function Header() {
                     <span className='ml-2 font-bold'>SOUSA STORE</span>
                 </Link>
                 <ul className="items-stretch hidden space-x-3 md:flex">
-                    <li className="flex">
-                        <Link href="/orders" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">
-                            Meus Pedidios
-                        </Link>
-                    </li>
+
+                    {session && (
+                        <li className="flex">
+                            <Link href="/orders" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">
+                                Meus Pedidos
+                            </Link>
+                        </li>
+                    )}
+
                     <li className="flex">
                         <Link href="/cart" className="flex items-center px-4 -mb-1 border-b-2 border-transparent">
                             Carrinho
@@ -37,11 +46,18 @@ export default function Header() {
                             </span>
                         </Link>
                     </li>
-                    <li className="flex">
-                        <button onClick={handleSignOut} className="flex items-center px-4 -mb-1 border-b-2 border-transparent">
-                            Sair
-                            <FaSignOutAlt size={18} className='ml-2' />
-                        </button>
+                    <li className="flex items-center justify-center">
+                        {session ? (
+                            <button onClick={handleSignOut} className="flex items-center px-4 -mb-1 border-b-2 border-transparent">
+                                Sair
+                                <FaSignOutAlt size={18} className='ml-2' />
+                            </button>
+                        ) : (
+                            <Link href={'/auth/signin'} className="w-32 rounded text-white text-center p-2 bg-green-600 border-transparent">
+                                Entrar
+                            </Link>
+                        )}
+
                     </li>
                 </ul>
                 <button className="flex justify-end p-4 md:hidden">

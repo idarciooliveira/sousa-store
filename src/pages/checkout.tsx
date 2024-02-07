@@ -1,13 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import Link from "next/link";
-
-// Renders errors or successfull transactions on the screen.
-function Message({ content }: any) {
-  return <p>{content}</p>;
-}
+import toast from "react-hot-toast";
+import { getSession } from "next-auth/react";
+import { GetServerSideProps } from "next";
+import { useCart } from "./context/cart";
+import { useRouter } from "next/navigation";
 
 const initialOptions = {
   "clientId": "AWP0R2oes7y3Z6BJkuQICfF1BcL61y4DTuaZJrEZ4iZEC5rPiam67PFjVBtokXCh38Vnzd6vDTlC2ohi",
@@ -16,34 +15,26 @@ const initialOptions = {
   "data-sdk-integration-source": "integrationbuilder_sc",
 };
 
+
 export default function Checkout() {
 
-  const [message, setMessage] = useState("");
+  const router = useRouter()
+  const { cart } = useCart()
+  const total = cart.reduce((prev, next) => prev + (next.price * next.qts), 0)
+
+  if (cart.length <= 0) {
+    router.replace('/')
+  }
 
   return (
     <div>
       <Header />
       <div className="flex flex-col container rounded-md mx-auto mb-2 max-w-3xl p-6 space-y-4 sm:p-10 bg-gray-100 text-gray-800">
         <h2 className="text-xl font-semibold">
-          Checkout da Compra
+          Pagamento
         </h2>
-        <div className="flex flex-col w-full space-y-2 sm:space-y-4">
-          <div className="flex justify-between w-full items-center">
-            <h3 className="text-md font-semibold leadi">  Total da Compra </h3>
-            <p className="text-right text-md"> 599.999 AO </p>
-          </div>
-          <div className="flex justify-between w-full items-center">
-            <h3 className="text-md font-semibold leadi"> Local de Entrega </h3>
-            <select className="w-60 text-center h-10 text-md rounded ">
-              <option value="LUBANGO">LUBANGO</option>
-              <option value="MUTUNDO">MUTUNDO</option>
-            </select>
-          </div>
-        </div>
-
         <div className="space-y-1 text-right">
-          <p>Taxa de Entrega: <span className="font-semibold"> 599 AO</span> </p>
-          <p>Total a Pagar: <span className="font-semibold"> 699.999 AO</span> </p>
+          <p>Total a Pagar: <span className="font-semibold"> {total} AO</span> </p>
         </div>
         <div className="flex justify-end space-x-4">
           <PayPalScriptProvider options={initialOptions}>
@@ -55,20 +46,27 @@ export default function Checkout() {
               }}
               createOrder={async () => {
                 try {
+
+                  const cartItems: any = []
+
+                  cart.forEach(item => {
+                    cartItems.push({
+                      productId: item.id,
+                      qts: item.qts,
+                      price: item.price,
+                      total: item.price * item.qts
+                    })
+                  })
+
                   const response = await fetch("/api/payments", {
                     method: "POST",
                     headers: {
                       "Content-Type": "application/json",
                     },
-                    // use the "body" param to optionally pass additional order information
-                    // like product ids and quantities
+
                     body: JSON.stringify({
-                      cart: [
-                        {
-                          id: "YOUR_PRODUCT_ID",
-                          quantity: "YOUR_PRODUCT_QUANTITY",
-                        },
-                      ],
+                      items: cartItems,
+                      currency: 'USD'
                     }),
                   });
 
@@ -82,11 +80,10 @@ export default function Checkout() {
                       ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
                       : JSON.stringify(orderData);
 
-                    throw new Error(errorMessage);
+                    toast.error(errorMessage)
                   }
                 } catch (error) {
-                  // console.error(error);
-                  setMessage(`Could not initiate PayPal Checkout...${error}`);
+                  toast.error(`Ocorreu um erro ${error}`)
                 }
               }}
               onApprove={async (data, actions) => {
@@ -111,7 +108,7 @@ export default function Checkout() {
                     return actions.restart();
                   } else if (errorDetail) {
                     // (2) Other non-recoverable errors -> Show a failure message
-                    throw new Error(
+                    toast.error(
                       `${errorDetail.description} (${orderData.debug_id})`,
                     );
                   } else {
@@ -119,19 +116,17 @@ export default function Checkout() {
                     // Or go to another URL:  actions.redirect('thank_you.html');
                     const transaction =
                       orderData.purchase_units[0].payments.captures[0];
-                    setMessage(`Pagamento Concluido, Referência ${transaction.status}: ${transaction.id}`);
+                    toast.success(`Pagamento Concluido, Referência ${transaction.status}: ${transaction.id}`);
 
                   }
                 } catch (error) {
-                  console.error(error);
-                  setMessage(
+                  toast.error(
                     `Não foi possível concluir o seu pagamento...${error}`,
                   );
                 }
               }}
             />
           </PayPalScriptProvider>
-          <Message content={message} />
         </div>
       </div>
 
@@ -140,3 +135,20 @@ export default function Checkout() {
   );
 }
 
+export const getServerSideProps: GetServerSideProps = async (ctx) => {
+  const session = await getSession(ctx)
+
+  if (!session) {
+    return {
+      redirect: {
+        permanent: true,
+        destination: 'auth/signin'
+      }
+    }
+  }
+  return {
+    props: {
+
+    }
+  }
+}

@@ -14,12 +14,18 @@ export default function Signin() {
         const response = await signIn('credentials', {
             username: email,
             password,
-            redirect: false
+            redirect: true,
+            callbackUrl: '/'
         })
 
-        if (!response?.ok) return toast.error('Email ou Senha incorrecta', { position: 'top-right' })
-        reset()
-        return toast.success('Bem-vindo', { position: 'bottom-right' })
+        if (response?.ok) {
+            reset()
+            return toast.success('Bem-vindo', { position: 'bottom-right' })
+        } else {
+            return toast.error('Email ou Senha incorrecta', { position: 'top-right' })
+        }
+
+
     }
 
     return (

@@ -4,18 +4,30 @@ import Footer from '@/components/footer'
 import Header from '@/components/header'
 import { ProductProps, getProductId } from '@/services/product'
 import { GetServerSideProps } from 'next'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useCart } from '../context/cart'
 import toast from 'react-hot-toast'
+import { useRouter } from 'next/router'
 
 type Props = {
-    product: ProductProps
+    productId: string
 }
 
-export default function ProductDetail({ product }: Props) {
+export default function ProductDetail({ productId }: Props) {
 
+    const router = useRouter()
     const { addItem } = useCart()
     const [units, setUnits] = useState(1)
+    const [product, setProduct] = useState<ProductProps>()
+
+    useEffect(() => {
+        (async () => {
+            if (router.query) {
+                const product = await getProductId(productId)
+                setProduct(product)
+            }
+        })()
+    }, [])
 
 
     function handleOnLowerUnits() {
@@ -28,6 +40,7 @@ export default function ProductDetail({ product }: Props) {
     }
 
     function handleAddOnCart() {
+        if (!product) return
         addItem({
             ...product,
             qts: units
@@ -54,7 +67,7 @@ export default function ProductDetail({ product }: Props) {
                                             </path>
                                         </svg>
                                     </a>
-                                    <img className="object-contain w-full lg:h-full" src={product.imageUrl} alt="" />
+                                    <img className="object-contain w-full lg:h-full" src={product?.imageUrl} alt="" />
                                     <a className="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2" href="#">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-green-500 bi bi-chevron-right dark:text-green-200" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
@@ -69,10 +82,10 @@ export default function ProductDetail({ product }: Props) {
                             <div className="lg:pl-20">
                                 <div className="mb-6 ">
                                     <h2 className="max-w-xl mt-6 mb-6 text-xl font-semibold leading-loose tracking-wide md:text-2xl ">
-                                        {product.description}
+                                        {product?.description}
                                     </h2>
                                     <p className="inline-block text-2xl font-semibold  ">
-                                        <span>{product.price}</span>
+                                        <span>{product?.price}</span>
                                     </p>
                                 </div>
 
@@ -128,12 +141,9 @@ export const getServerSideProps: GetServerSideProps = async ({ query }) => {
         redirect: '/'
     }
 
-    //@ts-ignore
-    const product = await getProductId(slug)
-
     return {
         props: {
-            product
+            productId: slug
         }
     }
 }

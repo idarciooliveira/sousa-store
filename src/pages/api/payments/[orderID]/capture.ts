@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import { generateAccessToken } from "..";
+import prisma from "@/lib/prisma";
 
 const BASE_URL = process.env.BASE_URL;
 
@@ -25,6 +26,26 @@ export default async function handler(req: RequestProps, res: NextApiResponse) {
         });
 
         const data = await response.json()
+
+        const order = await prisma.order.update({
+            where: {
+                //@ts-ignore
+                id: orderID,
+            },
+            data: {
+                status: 'Pago'
+            }
+        })
+
+        await prisma.payment.create({
+            data: {
+                //@ts-ignore
+                ref: order.id,
+                amount: order.total,
+                userId: order.userId
+            }
+        })
+
         return res.status(200).json(data)
 
     } else {

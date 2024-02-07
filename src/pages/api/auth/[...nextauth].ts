@@ -5,7 +5,7 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 const endpoint = `${process.env.NEXTAPP_URL}/api/v1/auth/users/auth`
 
-export default NextAuth({
+export const authOptions = NextAuth({
     adapter: PrismaAdapter(prisma),
     secret: process.env.NEXTAUTH_SECRET,
     session: { strategy: 'jwt', maxAge: 24 * 60 * 60 },
@@ -18,15 +18,21 @@ export default NextAuth({
         signOut: '/',
     },
     callbacks: {
-        session({ session, user }) {
-            if (user !== null) {
-                session.user = user;
-            }
-            return session;
+        session({ session, token }) {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id
+                },
+            };
         },
 
-        jwt({ token, }) {
-            return token;
+        jwt({ token, user }) {
+            if (user) {
+                token.id = user.id
+            }
+            return token
         },
     },
     providers: [
@@ -63,3 +69,5 @@ export default NextAuth({
     ],
 
 })
+
+export default authOptions

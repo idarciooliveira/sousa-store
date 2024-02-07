@@ -2,13 +2,18 @@ import Footer from "@/components/footer";
 import Header from "@/components/header";
 import Products from "@/components/products";
 import { ProductProps, getProducts } from "@/services/product";
-import { GetServerSideProps } from "next";
+import { useEffect, useState } from "react";
 
-type Props = {
-    products: ProductProps[]
-}
+export default function App() {
 
-export default function App({ products }: Props) {
+    const [products, setProducts] = useState<ProductProps[]>([])
+
+    useEffect(() => {
+        (async () => {
+            const products = await getProducts()
+            setProducts(products)
+        })()
+    }, [])
 
     return (
         <>
@@ -19,13 +24,13 @@ export default function App({ products }: Props) {
     )
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+// export const getServerSideProps: GetServerSideProps = async () => {
 
-    const products = await getProducts()
+//     const products = await getProducts()
 
-    return {
-        props: {
-            products
-        }
-    }
-}
+//     return {
+//         props: {
+//             products,
+//         }
+//     }
+// }
