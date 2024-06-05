@@ -22,13 +22,13 @@ export default function Products({ products }: Props) {
                                 <img className="object-cover w-full h-52 bg-gray-500" src={product.imageUrl} />
                             </div>
                             <div className="flex flex-col flex-1 p-6">
-                                <span className="text-xs tracki uppercase hover:underline text-green-600">
+                                <span className="text-xs tracki uppercase hover:underline text-amber-600">
                                     Categoria
                                 </span>
                                 <h3 className="flex-1 py-2 text-lg font-semibold leadi">
                                     {product.description}
                                 </h3>
-                                <div className="flex flex-wrap text-xl font-semibold text-green-600">
+                                <div className="flex flex-wrap text-xl font-semibold text-amber-600">
                                     <span>{product.price} Kz</span>
                                 </div>
                             </div>

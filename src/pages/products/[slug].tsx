@@ -62,14 +62,14 @@ export default function ProductDetail({ productId }: Props) {
                             <div className="sticky top-0 overflow-hidden ">
                                 <div className="relative mb-6 lg:mb-10 lg:h-96">
                                     <a className="absolute left-0 transform lg:ml-2 top-1/2 translate-1/2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-green-500 bi bi-chevron-left dark:text-green-200" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-amber-500 bi bi-chevron-left dark:text-amber-200" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z">
                                             </path>
                                         </svg>
                                     </a>
                                     <img className="object-contain w-full lg:h-full" src={product?.imageUrl} alt="" />
                                     <a className="absolute right-0 transform lg:mr-2 top-1/2 translate-1/2" href="#">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-green-500 bi bi-chevron-right dark:text-green-200" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 text-amber-500 bi bi-chevron-right dark:text-amber-200" viewBox="0 0 16 16">
                                             <path fillRule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z">
                                             </path>
                                         </svg>
@@ -90,8 +90,8 @@ export default function ProductDetail({ productId }: Props) {
                                 </div>
 
                                 <div className="py-6 mb-6 border-t border-b border-gray-200">
-                                    <span className="text-base text-green-600 ">Disponível</span>
-                                    <p className="mt-2 text-sm text-green-500">
+                                    <span className="text-base text-amber-600 ">Disponível</span>
+                                    <p className="mt-2 text-sm text-amber-500">
                                         <span className="text-gray-600 ">
                                             As entregas levam entre 3 - 4 dias úteis
                                         </span>
@@ -113,12 +113,12 @@ export default function ProductDetail({ productId }: Props) {
                                         </div>
                                     </div>
 
-                                    <button onClick={handleAddOnCart} className="w-full px-4 py-3 text-center text-green-600 bg-amber-100 border border-green-600 hover:bg-amber-600 hover:text-gray-100 lg:w-1/2 rounded-xl">
+                                    <button onClick={handleAddOnCart} className="w-full px-4 py-3 text-center text-amber-600 bg-amber-100 border border-amber-600 hover:bg-amber-600 hover:text-gray-100 lg:w-1/2 rounded-xl">
                                         Adicionar no carrinho
                                     </button>
                                 </div>
                                 {/* <div className="flex gap-4 mb-6">
-                                    <Link href="/cart" className="w-full px-4 py-3 text-center text-gray-100 bg-amber-600 border border-transparent hover:border-green-500 hover:text-green-700 hover:bg-amber-100 rounded-xl">
+                                    <Link href="/cart" className="w-full px-4 py-3 text-center text-gray-100 bg-amber-600 border border-transparent hover:border-amber-500 hover:text-amber-700 hover:bg-amber-100 rounded-xl">
                                         Comprar agora
                                     </Link>
                                 </div> */}

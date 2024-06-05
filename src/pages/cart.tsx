@@ -56,11 +56,11 @@ export default function Cart() {
                     <p className="text-sm text-gray-600">Não incluíndo a taxa de entrega</p>
                 </div>
                 <div className="flex justify-end space-x-4">
-                    <Link href='/' className="px-6 py-2 border rounded-md border-green-600">
+                    <Link href='/' className="px-6 py-2 border rounded-md border-amber-600">
                         Continuar a comprar
                     </Link>
                     {cart.length > 0 &&
-                        <Link href='/checkout' className="px-6 py-2 border rounded-md bg-amber-600 text-gray-50 border-green-600">
+                        <Link href='/checkout' className="px-6 py-2 border rounded-md bg-amber-600 text-gray-50 border-amber-600">
                             Finalizar pedido
                         </Link>
                     }
