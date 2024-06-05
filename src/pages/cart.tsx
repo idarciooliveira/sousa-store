@@ -60,7 +60,7 @@ export default function Cart() {
                         Continuar a comprar
                     </Link>
                     {cart.length > 0 &&
-                        <Link href='/checkout' className="px-6 py-2 border rounded-md bg-green-600 text-gray-50 border-green-600">
+                        <Link href='/checkout' className="px-6 py-2 border rounded-md bg-amber-600 text-gray-50 border-green-600">
                             Finalizar pedido
                         </Link>
                     }

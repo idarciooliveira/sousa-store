@@ -27,7 +27,7 @@ export default function Signin() {
         <div>
             <div className="flex flex-col container mx-auto w-full mt-4 p-6 rounded-md bg-gray-100 text-gray-800">
                 <div className="mb-8 text-center">
-                    <h1 className="my-3 text-4xl font-bold">Sousa Store</h1>
+                    <h1 className="my-3 text-4xl font-bold">Casa de mobília</h1>
                 </div>
                 <form onSubmit={handleSubmit(handleOnSubmit)} className="space-y-12">
                     <div className="space-y-4">
@@ -52,12 +52,12 @@ export default function Signin() {
                     </div>
                     <div className="space-x-2 flex flex-row items-center justify-center">
                         <div>
-                            <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-green-600 text-gray-50">
+                            <button type="submit" className="w-full px-8 py-3 font-semibold rounded-md bg-amber-600 text-gray-50">
                                 Criar Conta
                             </button>
                         </div>
                         <div>
-                            <Link href={'/auth/signin'} className="w-full px-8 py-3 font-semibold bg-blue-600 rounded-md bg-green-600 text-gray-50">
+                            <Link href={'/auth/signin'} className="w-full px-8 py-3 font-semibold bg-blue-600 rounded-md bg-amber-600 text-gray-50">
                                 Ja tenho uma conta
                             </Link>
                         </div>

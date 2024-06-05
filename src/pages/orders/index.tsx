@@ -53,7 +53,7 @@ export default function Orders() {
                                         <p>{order?.total} AO</p>
                                     </td>
                                     <td className="p-3 text-right">
-                                        <span className="px-3 py-1 font-semibold rounded-md bg-green-600 text-gray-50">
+                                        <span className="px-3 py-1 font-semibold rounded-md bg-amber-600 text-gray-50">
                                             <Link href={`/orders/${order?.id}`}>{order?.status}</Link>
                                         </span>
                                     </td>

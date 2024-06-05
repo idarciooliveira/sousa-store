@@ -113,12 +113,12 @@ export default function ProductDetail({ productId }: Props) {
                                         </div>
                                     </div>
 
-                                    <button onClick={handleAddOnCart} className="w-full px-4 py-3 text-center text-green-600 bg-green-100 border border-green-600 hover:bg-green-600 hover:text-gray-100 lg:w-1/2 rounded-xl">
+                                    <button onClick={handleAddOnCart} className="w-full px-4 py-3 text-center text-green-600 bg-amber-100 border border-green-600 hover:bg-amber-600 hover:text-gray-100 lg:w-1/2 rounded-xl">
                                         Adicionar no carrinho
                                     </button>
                                 </div>
                                 {/* <div className="flex gap-4 mb-6">
-                                    <Link href="/cart" className="w-full px-4 py-3 text-center text-gray-100 bg-green-600 border border-transparent hover:border-green-500 hover:text-green-700 hover:bg-green-100 rounded-xl">
+                                    <Link href="/cart" className="w-full px-4 py-3 text-center text-gray-100 bg-amber-600 border border-transparent hover:border-green-500 hover:text-green-700 hover:bg-amber-100 rounded-xl">
                                         Comprar agora
                                     </Link>
                                 </div> */}
